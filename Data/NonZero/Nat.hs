@@ -78,24 +78,24 @@ type Suc = 'Suc
 type family Plus (n :: Nat) (m :: Nat) :: Nat where
   Plus One     m = Suc m
   Plus (Suc n) m = Suc (Plus n m)
-type (:+:) = Plus
+type n :+: m = Plus n m
 
 type family Minus (n :: Nat) (m :: Nat) :: Nat where
   Minus (Suc n) (Suc m) = Minus n m
   Minus (Suc n) One     = n
   Minus One     One     = One
-type (:-:) = Minus
+type n :-: m = Minus n m
 
 type family Mult (n :: Nat) (m :: Nat) :: Nat where
   Mult One     m = m
   Mult (Suc n) m = Plus m (Mult n m)
-type (:*:) = Mult
+type n :*: m = Mult n m
 
 -- | Decide LessThanOrEqual between two Nats.
 type family (n :: Nat) :<= (m :: Nat) :: Bool where
-  One     :<= n       = True
-  (Suc n) :<= One     = False
-  (Suc n) :<= (Suc m) = n :<= m
+  One   :<= n     = True
+  Suc n :<= One   = False
+  Suc n :<= Suc m = n :<= m
 
 -- | 'n' is less than or equal to 'm'.
 type (n :: Nat) :<=: (m :: Nat) = (n :<= m) ~ True
